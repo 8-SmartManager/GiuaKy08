@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinkViews();
         getData();
+        LinkViews();
+
 
         getDataFromDB();
         addEvent();
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        adapter = new ProductAdapter(MainActivity.this,R.layout.item_list,getDataFromDB());
+        adapter = new ProductAdapter(MainActivity.this,R.layout.item_layout,getDataFromDB());
         lvProduct.setAdapter(adapter);
     }
 

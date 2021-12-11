@@ -33,10 +33,8 @@ public class MyDataBase  extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
 
     }
-    public void  queryExec(String sql){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(sql);
-    }
+
+
     public Cursor getData(String sql){
         SQLiteDatabase db= getReadableDatabase();
         return db.rawQuery(sql, null);

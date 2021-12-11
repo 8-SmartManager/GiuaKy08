@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
 
-    EditText edtName, edtPrice;
-    Button btnCapture, btnSave, btnCancel;
+    EditText edtName, edtDes;
+    Button btnChange, btnSave, btnCancel;
     ImageView imvImage;
 
     ImageProduct bi;
+    int imageId= R.drawable.heineken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void addEvent() {
-        imvImage.setOnClickListener(new View.OnClickListener() {
+        btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog dialog= new Dialog(AddActivity.this);
@@ -72,10 +73,10 @@ public class AddActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name= edtName.getText().toString(), price= edtPrice.getText().toString();
-                int im= bi.getImageId();
-                if(!name.equals("")&&!price.equals("")){
-                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null, '"+name+"', '"+price+"', "+im+")");
+                String name= edtName.getText().toString(), des= edtDes.getText().toString();
+                imageId= bi.getImageId();
+                if(!name.equals("")&&!des.equals("")){
+                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,'"+imageId+"', '"+name+"', '"+des+"')");
                     Toast.makeText(AddActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -88,9 +89,9 @@ public class AddActivity extends AppCompatActivity {
 
     private void linkViews() {
         edtName=findViewById(R.id.edtName);
-        edtPrice=findViewById(R.id.edtDes);
+        edtDes=findViewById(R.id.edtDes);
         btnCancel=findViewById(R.id.btnCancel);
-
+        btnChange=findViewById(R.id.btnEdit);
         btnSave=findViewById(R.id.btnSave);
         imvImage=findViewById(R.id.imvPhotoProduct);
 
