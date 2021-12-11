@@ -72,4 +72,6 @@ public class ProductAdapter extends BaseAdapter {
         TextView txtName, txtDes;
     }
 
+
+
 }
