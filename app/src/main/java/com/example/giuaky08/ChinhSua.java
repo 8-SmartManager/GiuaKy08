@@ -1,9 +1,12 @@
 package com.example.giuaky08;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -11,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adapter.ImageAdapter;
@@ -26,13 +28,13 @@ public class ChinhSua extends AppCompatActivity {
     Button btnUpdate, btnCancel, btnEdit;
     ImageView imvPhoto;
     Product selectedProduct;
-    ImageProduct im;
+    ImageProduct bi;
     int imageId = R.drawable.heineken;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main3);
 
         linkViews();
         getData();
@@ -79,7 +81,7 @@ public class ChinhSua extends AppCompatActivity {
                 gvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        im= (ImageProduct) adapter.getItem(i);
+                        bi= (ImageProduct) adapter.getItem(i);
                         imvPhoto.setImageResource(bi.getImageId());
                         dialog.dismiss();
                     }
@@ -92,7 +94,7 @@ public class ChinhSua extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name= edtName.getText().toString(), des= edtDes.getText().toString();
-                imageId= im.getImageId();
+                imageId= bi.getImageId();
                 if(name.equals("")||des.equals("")){
                     AlertDialog.Builder builder= new AlertDialog.Builder(ChinhSua.this);
                     builder.setTitle("Lỗi!");
