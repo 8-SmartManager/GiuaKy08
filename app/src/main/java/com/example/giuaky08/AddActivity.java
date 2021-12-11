@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adapter.ImageAdapter;
+import com.example.model.ImageProduct;
 import com.example.model.Product;
+
+import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
     TextView txtTitle;
@@ -36,6 +41,19 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog= new Dialog(AddActivity.this);
                 dialog.setContentView(R.layout.dialog_image);
+                GridView gvImage= dialog.findViewById(R.id.gvImage);
+                ArrayList<ImageProduct> imageProducts = new ArrayList<>();
+                imageProducts.add(new ImageProduct(R.drawable.beer333));
+                imageProducts.add(new ImageProduct(R.drawable.hanoi));
+                imageProducts.add(new ImageProduct(R.drawable.heineken));
+                imageProducts.add(new ImageProduct(R.drawable.larue));
+                imageProducts.add(new ImageProduct(R.drawable.saigon));
+                imageProducts.add(new ImageProduct(R.drawable.sapporo));
+                imageProducts.add(new ImageProduct(R.drawable.tiger));
+                imageProducts.add(new ImageProduct(R.drawable.larue));
+                imageProducts.add(new ImageProduct(R.drawable.tiger));
+                ImageAdapter adapter= new ImageAdapter(AddActivity.this,R.layout.item_layout_image,imageProducts);
+
             }
         });
     }
