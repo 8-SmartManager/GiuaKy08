@@ -12,7 +12,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Infomation"
+        android:text="Add"
         android:textSize="36sp"
         android:layout_gravity="center"
         android:textColor="#19604E"/>
@@ -65,12 +65,15 @@
         android:layout_marginTop="10dp"
         android:text="Edit"
         android:backgroundTint="#1DE9B6" />
+
     <ImageView
-        android:id="@+id/imvPhoto"
+        android:id="@+id/imvPhotoProduct"
         android:layout_width="250dp"
         android:layout_height="200dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center"/>
+        android:src="@drawable/heineken"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

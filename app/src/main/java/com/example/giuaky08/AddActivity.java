@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,11 @@ import com.example.model.Product;
 import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
-    TextView txtTitle;
+
     EditText  edtName, edtDes;
     ImageView imvPhoto;
     Button btnChange, btnSave, btnCancel;
-    Product selectedProduct;
+
     ImageProduct ip;
     int imageId=0;
 
@@ -34,8 +35,9 @@ public class AddActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        imvPhoto.setImageResource(R.drawable.heineken);
+
         linkView();
+        imvPhoto.setImageResource(R.drawable.beer333);
        addEvent();
     }
 
@@ -77,13 +79,15 @@ public class AddActivity extends AppCompatActivity {
                 imageId=ip.getImageId();
                 if(!name.equals("")&&!des.equals("")&&imageId!=0){
                     MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,"+imageId+",'"+name+"', '"+des+"')");
+                    Toast.makeText(AddActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
     }
 
     private void linkView() {
-        imvPhoto=findViewById(R.id.imvPhoto);
+        imvPhoto=findViewById(R.id.imvPhotoProduct);
         edtName=findViewById(R.id.edtName);
         edtDes=findViewById(R.id.edtDes);
         btnSave=findViewById(R.id.btnSave);
