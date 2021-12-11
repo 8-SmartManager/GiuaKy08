@@ -2,15 +2,16 @@ package com.example.model;
 
 public class Product {
     private int productId;
+    private int productImage;
     private String productName;
     private String productDes;
-    private int productImage;
 
-    public Product(int productId, String productName, String productDes, int productImage) {
+
+    public Product(int productId, int productImage, String productName, String productDes) {
         this.productId = productId;
+        this.productImage = productImage;
         this.productName = productName;
         this.productDes = productDes;
-        this.productImage = productImage;
     }
 
     public int getProductId() {
