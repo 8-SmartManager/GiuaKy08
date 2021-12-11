@@ -3,6 +3,7 @@ package com.example.giuaky08;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -24,6 +25,8 @@ public class AddActivity extends AppCompatActivity {
     ImageView imvPhoto;
     Button btnChange, btnSave, btnCancel;
     Product selectedProduct;
+    ImageProduct ip;
+    int imageId=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class AddActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        imvPhoto.setImageResource(R.drawable.heineken);
         linkView();
        addEvent();
     }
@@ -53,7 +57,27 @@ public class AddActivity extends AppCompatActivity {
                 imageProducts.add(new ImageProduct(R.drawable.larue));
                 imageProducts.add(new ImageProduct(R.drawable.tiger));
                 ImageAdapter adapter= new ImageAdapter(AddActivity.this,R.layout.item_layout_image,imageProducts);
-
+                gvImage.setAdapter(adapter);
+                gvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        ip= (ImageProduct) adapter.getItem(i);
+                        imvPhoto.setImageResource(ip.getImageId());
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name=edtName.getText().toString(),
+                        des= edtDes.getText().toString();
+                imageId=ip.getImageId();
+                if(!name.equals("")&&!des.equals("")&&imageId!=0){
+                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,"+imageId+",'"+name+"', '"+des+"')");
+                }
             }
         });
     }

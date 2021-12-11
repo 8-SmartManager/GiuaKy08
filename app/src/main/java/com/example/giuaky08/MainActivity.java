@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvProduct;
     ProductAdapter adapter;
     ArrayList<Product> products;
-    MyDataBase db;
+    public static MyDataBase db;
 
 
     @Override
