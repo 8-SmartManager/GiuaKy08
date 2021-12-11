@@ -1,12 +1,15 @@
 package com.example.giuaky08;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,26 +23,37 @@ import java.util.ArrayList;
 public class ChinhSua extends AppCompatActivity {
 
     EditText edtName, edtDes;
-    Button btnSave, btnCancel, btnEdit;
+    Button btnUpdate, btnCancel, btnEdit;
     ImageView imvPhoto;
     Product selectedProduct;
+    ImageProduct im;
+    int imageId = R.drawable.heineken;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main3);
 
         linkViews();
+        getData();
+        imvPhoto.setImageResource(R.drawable.heineken);
         addEvents();
     }
 
     private void linkViews() {
         edtName = findViewById(R.id.edtName);
         edtDes = findViewById(R.id.edtDes);
-        btnSave = findViewById(R.id.btnSave);
+        btnUpdate = findViewById(R.id.btnUpdate);
         btnCancel = findViewById(R.id.btnCancel);
         btnEdit = findViewById(R.id.btnEdit);
         imvPhoto = findViewById(R.id.imvPhoto);
+    }
+
+    private void getData() {
+        Intent intent = getIntent();
+        selectedProduct = (Product) intent.getSerializableExtra("san pham");
+        edtName.setText(selectedProduct.getProductName());
+        edtDes.setText(selectedProduct.getProductDes());
     }
 
     private void addEvents() {
@@ -61,7 +75,26 @@ public class ChinhSua extends AppCompatActivity {
                 imageProducts.add(new ImageProduct(R.drawable.sapporo));
                 ImageAdapter adapter = new ImageAdapter(ChinhSua.this, R.layout.item_layout_image, imageProducts);
                 gvImage.setAdapter(adapter);
-                dialog.show();
+                gvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        im = (ImageProduct) adapter.getItem(i);
+                        imvPhoto.setImageResource(im.getImageId());
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = edtName.getText().toString(), des = edtDes.getText().toString();
+                imageId = im.getImageId();
+                if (!name.equals("")&&!des.equals("")&&(imageId!=0)){
+                    MainActivity.db.execSql("UPDATE " + MyDataBase.TBL_NAME + " SET " + MyDataBase.COL_W_NAME + " = '" + name + "' AND " + MyDataBase.COL_W_DES + " = '" + des + "' WHERE " + MyDataBase.COL_W_ID + " = " + imageId);
+                    Toast.makeText(ChinhSua.this, "Success!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
