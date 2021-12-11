@@ -1,15 +1,21 @@
 package com.example.giuaky08;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adapter.ImageAdapter;
+import com.example.model.ImageProduct;
 import com.example.model.Product;
+
+import java.util.ArrayList;
 
 public class ChinhSua extends AppCompatActivity {
 
@@ -40,7 +46,28 @@ public class ChinhSua extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog dialog = new Dialog(ChinhSua.this);
+                dialog.setContentView(R.layout.dialog_image);
 
+                ImageView imageView =dialog.findViewById(R.id.imvPhoto);
+                GridView gvImage = dialog.findViewById(R.id.gvImage);
+                ArrayList<ImageProduct> imageProducts = new ArrayList<>();
+                imageProducts.add(new ImageProduct(R.drawable.beer333));
+                imageProducts.add(new ImageProduct(R.drawable.hanoi));
+                imageProducts.add(new ImageProduct(R.drawable.heineken));
+                imageProducts.add(new ImageProduct(R.drawable.larue));
+                imageProducts.add(new ImageProduct(R.drawable.tiger));
+                imageProducts.add(new ImageProduct(R.drawable.saigon));
+                imageProducts.add(new ImageProduct(R.drawable.sapporo));
+                ImageAdapter adapter = new ImageAdapter(ChinhSua.this, R.layout.item_layout_image, imageProducts);
+                gvImage.setAdapter(adapter);
+                dialog.show();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
