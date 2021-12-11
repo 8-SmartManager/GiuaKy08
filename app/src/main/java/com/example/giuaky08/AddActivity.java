@@ -1,6 +1,8 @@
 package com.example.giuaky08;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,12 +77,40 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name= edtName.getText().toString(), des= edtDes.getText().toString();
                 imageId= bi.getImageId();
-                if(!name.equals("")&&!des.equals("")){
-                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,'"+imageId+"', '"+name+"', '"+des+"')");
-                    Toast.makeText(AddActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                    finish();
+                if(name.equals("")||des.equals("")){
+                    AlertDialog.Builder builder= new AlertDialog.Builder(AddActivity.this);
+                    builder.setTitle("Lỗi!");
+                    builder.setMessage("Vui lòng nhập đủ thông tin");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                          dialogInterface.dismiss();
+                        }
+                    });
+
+                    builder.create().show();
+                }
+                else {
+                    try {
+                        MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,"+imageId+", '"+name+"', '"+des+"')");
+                        Toast.makeText(AddActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    catch (Exception exception){
+                        Toast.makeText(AddActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
                 }
 
+
+
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

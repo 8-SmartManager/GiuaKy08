@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         MainActivity.db.execSql("DELETE FROM "+ MyDataBase.TBL_NAME+" WHERE "+MyDataBase.COL_W_ID + "=" +selectedProduct.getProductId());
+                        loadData();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
