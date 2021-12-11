@@ -22,76 +22,77 @@ import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
 
-    EditText  edtName, edtDes;
-    ImageView imvPhoto;
-    Button btnChange, btnSave, btnCancel;
+    EditText edtName, edtPrice;
+    Button btnCapture, btnSave, btnCancel;
+    ImageView imvImage;
 
-    ImageProduct ip;
-    int imageId=0;
+    ImageProduct bi;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        linkViews();
+        imvImage.setImageResource(R.drawable.heineken);
+        addEvent();
 
-        linkView();
-        imvPhoto.setImageResource(R.drawable.beer333);
-       addEvent();
     }
 
     private void addEvent() {
-        btnChange.setOnClickListener(new View.OnClickListener() {
+        imvImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog dialog= new Dialog(AddActivity.this);
                 dialog.setContentView(R.layout.dialog_image);
-                GridView gvImage= dialog.findViewById(R.id.gvImage);
-                ArrayList<ImageProduct> imageProducts = new ArrayList<>();
-                imageProducts.add(new ImageProduct(R.drawable.beer333));
-                imageProducts.add(new ImageProduct(R.drawable.hanoi));
-                imageProducts.add(new ImageProduct(R.drawable.heineken));
-                imageProducts.add(new ImageProduct(R.drawable.larue));
-                imageProducts.add(new ImageProduct(R.drawable.saigon));
-                imageProducts.add(new ImageProduct(R.drawable.sapporo));
-                imageProducts.add(new ImageProduct(R.drawable.tiger));
-                imageProducts.add(new ImageProduct(R.drawable.larue));
-                imageProducts.add(new ImageProduct(R.drawable.tiger));
-                ImageAdapter adapter= new ImageAdapter(AddActivity.this,R.layout.item_layout_image,imageProducts);
+                GridView gvImage=dialog.findViewById(R.id.gvImage);
+                ArrayList<ImageProduct> image_beers= new ArrayList<>();
+                image_beers.add(new ImageProduct(R.drawable.beer333));
+                image_beers.add(new ImageProduct(R.drawable.hanoi));
+                image_beers.add(new ImageProduct(R.drawable.heineken));
+                image_beers.add(new ImageProduct(R.drawable.larue));
+                image_beers.add(new ImageProduct(R.drawable.sapporo));
+                image_beers.add(new ImageProduct(R.drawable.saigon));
+                image_beers.add(new ImageProduct(R.drawable.tiger));
+                image_beers.add(new ImageProduct(R.drawable.hanoi));
+                image_beers.add(new ImageProduct(R.drawable.beer333));
+                ImageAdapter adapter= new ImageAdapter(AddActivity.this,R.layout.item_layout_image,image_beers);
                 gvImage.setAdapter(adapter);
                 gvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        ip= (ImageProduct) adapter.getItem(i);
-                        imvPhoto.setImageResource(ip.getImageId());
+                        bi= (ImageProduct) adapter.getItem(i);
+                        imvImage.setImageResource(bi.getImageId());
                         dialog.dismiss();
                     }
                 });
+
                 dialog.show();
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name=edtName.getText().toString(),
-                        des= edtDes.getText().toString();
-                imageId=ip.getImageId();
-                if(!name.equals("")&&!des.equals("")&&imageId!=0){
-                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null,"+imageId+",'"+name+"', '"+des+"')");
+                String name= edtName.getText().toString(), price= edtPrice.getText().toString();
+                int im= bi.getImageId();
+                if(!name.equals("")&&!price.equals("")){
+                    MainActivity.db.execSql("INSERT INTO "+MyDataBase.TBL_NAME+" VALUES(null, '"+name+"', '"+price+"', "+im+")");
                     Toast.makeText(AddActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
+
             }
         });
     }
 
-    private void linkView() {
-        imvPhoto=findViewById(R.id.imvPhotoProduct);
+
+
+    private void linkViews() {
         edtName=findViewById(R.id.edtName);
-        edtDes=findViewById(R.id.edtDes);
-        btnSave=findViewById(R.id.btnSave);
+        edtPrice=findViewById(R.id.edtDes);
         btnCancel=findViewById(R.id.btnCancel);
-        btnChange=findViewById(R.id.btnEdit);
+
+        btnSave=findViewById(R.id.btnSave);
+        imvImage=findViewById(R.id.imvPhotoProduct);
+
     }
 }
