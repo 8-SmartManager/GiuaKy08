@@ -20,6 +20,12 @@ public class ProductAdapter extends BaseAdapter {
     int item_product;
     List<Product> productList;
 
+    public ProductAdapter(Context context, int item_product, List<Product> productList) {
+        this.context = context;
+        this.item_product = item_product;
+        this.productList = productList;
+    }
+
     @Override
     public int getCount() {
         return productList.size();
